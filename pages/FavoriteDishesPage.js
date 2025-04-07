@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import styles from '../styles/Favorite.module.css';
+import Link from "next/link";
 
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -69,17 +71,27 @@ export default function FavoriteDishesPage() {
     };
 
     return (
-        <div className="favorite-page">
-            <h1>Favorite Dishes</h1>
-            <ul>
-                {dishData.map(dish=>(
+        <div className={styles.favPage}>
+            <nav className={styles.navbar}>
+                <Link href={"/HomePage"} className={styles.nav}>Home</Link>
+                <Link href={"/FavoriteDishesPage"} className={styles.nav}>Favorite Dishes</Link>
+            </nav>
+            <div className={styles.favContent}>
+                <div className={styles.favTitle}>
+                    <h1>Favorite Dishes</h1>
+                </div>
+                
+                {dishData.length===0?(<div><p>No saved dishes.</p></div>):
+                (<ul>{dishData.map(dish=>(
                     <li key={dish.id}>
                         <img src={src[dish.id]} alt="dish-img" style={{width: '150px'}} />
                         <h3>{title[dish.id]}</h3>
                         <button onClick={()=>removeDish(dish.id)}>Mark as completed</button>
-                    </li>
+                    </li>   
                 ))}
-            </ul>
+                </ul>)}
+            </div>
+           
         </div>
     );
 }
