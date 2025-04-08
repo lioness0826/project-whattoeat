@@ -8,7 +8,6 @@ export default function FavoriteDishesPage() {
     const [src, setSrc] = useState({});
     const [title, setTitle] = useState({});
 
-
     useEffect(() => {
         if (typeof window !== "undefined") {
             const stored = localStorage.getItem("favoriteDishes");
@@ -17,8 +16,7 @@ export default function FavoriteDishesPage() {
 
             }
         }
-    }, []);
-    
+    }, []); 
 
     const fetchData = async () => {
         const imgMap = {};
