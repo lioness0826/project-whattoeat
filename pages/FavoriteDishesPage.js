@@ -72,7 +72,7 @@ export default function FavoriteDishesPage() {
         <div className={styles.favPage}>
             <nav className={styles.navbar}>
                 <Link href={"/HomePage"} className={styles.nav}>Home</Link>
-                <Link href={"/FavoriteDishesPage"} className={styles.nav}>Favorite Dishes</Link>
+                <Link href={"/FavoriteDishesPage"} className={styles.nav} scroll={true}>Favorite Dishes</Link>
             </nav>
             <div className={styles.favContent}>
                 <div className={styles.favTitle}>
@@ -81,7 +81,7 @@ export default function FavoriteDishesPage() {
                 
                 {dishData.length===0?(<div><p>No saved dishes.</p></div>):
                 (<ul>{dishData.map(dish=>(
-                    <li key={dish.id}>
+                    <li key={dish.id} className={styles.favList}>
                         <img src={src[dish.id]} alt="dish-img" style={{width: '150px'}} />
                         <h3>{title[dish.id]}</h3>
                         <button onClick={()=>removeDish(dish.id)}>Mark as completed</button>
