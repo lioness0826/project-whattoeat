@@ -60,7 +60,6 @@ export default function ViewRecipe() {
             }
             }, [id]); // Re-fetch when id changes
   
-
   return (
     <div>
       <h1>COOKING INSTRUCTION PAGE</h1>

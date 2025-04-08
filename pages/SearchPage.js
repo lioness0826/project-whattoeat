@@ -66,4 +66,3 @@ function GetUserInput() {
 }
 
 export default GetUserInput;
-

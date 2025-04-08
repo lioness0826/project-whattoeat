@@ -124,8 +124,6 @@ function GetCustomDish(){
             localStorage.setItem("favoriteDishes", JSON.stringify(savedDishes));
             
             console.log("Saving dish:", dishId);
-
-
           }
       };
 
@@ -164,8 +162,7 @@ export default function ResultPage() {
         content = <GetCustomDish />;
     }
 
-    return (
-        
+    return (       
       <div>
             <div>
                 <button onClick={() => router.push("/HomePage")}>Return Home</button>
