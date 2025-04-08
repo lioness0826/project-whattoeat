@@ -88,8 +88,7 @@ export default function FavoriteDishesPage() {
                     </li>   
                 ))}
                 </ul>)}
-            </div>
-           
+            </div> 
         </div>
     );
 }

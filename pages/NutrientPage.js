@@ -1,38 +1,23 @@
-import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { fetchAPI } from "./components/fetchAPI";
 
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export default function ViewNutrition() {
   const router = useRouter();
-  const { id } = router.query;  
-  const [nutrition, setNutrition] = useState(null);
-  const [labelUrl, setLabelUrl] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const {id} = router.query;
 
-  useEffect(() => {
-    if (id) {
-      setLoading(true);  
+  const NUTRITION_API_URL = `${BASE_URL}/${id}/nutritionWidget.json?apiKey=${API_KEY}`;
+  const LABEL_API_URL = `${BASE_URL}/${id}/nutritionLabel.png?apiKey=${API_KEY}`;
 
-      const NUTRITION_API_URL = `${BASE_URL}/${id}/nutritionWidget.json?apiKey=${API_KEY}`;
-      const LABEL_API_URL = `${BASE_URL}/${id}/nutritionLabel.png?apiKey=${API_KEY}`;
+  const {data: nutrition, loading: nutritionLoading, error: nutritionError} = fetchAPI(NUTRITION_API_URL);
 
-      // fetch nutrition data
-      fetch(NUTRITION_API_URL)
-        .then((response) => response.json())
-        .then((data) => {
-          setNutrition(data);
-          setLabelUrl(LABEL_API_URL); 
-          setLoading(false);
-        })
-        .catch((err) => {
-          setError(err.message);
-          setLoading(false);
-        });
-    }
-  }, [id]); // Re-run the effect when the id changes
+  // The label image URL is set manually since it's a static URL
+  const labelUrl = LABEL_API_URL;
+
+  const loading = nutritionLoading;
+  const error = nutritionError;
 
   if (loading) return <p>Loading nutrition information...</p>;
   if (error) return <p>Error: {error}</p>;
