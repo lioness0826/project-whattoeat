@@ -57,7 +57,7 @@ export default function ViewRecipe() {
                     {cardData.url && <img src={cardData.url} alt="Recipe Image" style={{ width: "500px", height: "auto" }} />}
                 </div>
             ) : (
-                <p>Loading recipe card...</p>
+                <p>No recipe card available.</p>
             )}
         </div>
     );
