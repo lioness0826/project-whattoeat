@@ -14,15 +14,18 @@ const useDishActions = (router) => {
     router.push(`/InstructionPage?id=${id}`);
   };
 
-  const handleSaveDish = (dishId) => {
+  const handleSaveDish = (dishId, dishTitle, dishImage) => {
     let savedDishes = JSON.parse(localStorage.getItem("favoriteDishes")) || [];
     const exists = savedDishes.some((dish) => dish.dish_id === dishId);
     if (!exists) {
       const newDish = {
         id: Date.now(),
         dish_id: dishId,
+        dish_title: dishTitle,
+        dish_image: dishImage
       };
       savedDishes.push(newDish);
+      console.log(savedDishes);
       localStorage.setItem("favoriteDishes", JSON.stringify(savedDishes));
     }
   };
@@ -42,7 +45,7 @@ const DishCard = ({ dish, onViewNutrition, onViewRecipe, onSaveDish }) => (
         <div>
             <button onClick={() => onViewNutrition(dish.id)}>View Nutrition</button>
             <button onClick={() => onViewRecipe(dish.id)}>View Instruction</button>
-            <button onClick={() => onSaveDish(dish.id)}>Save Dish</button>
+            <button onClick={() => onSaveDish(dish.id, dish.title, dish.image)}>Save Dish</button>
         </div>
     </div>
 );
