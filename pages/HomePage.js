@@ -5,15 +5,27 @@ function Home(){
     const router = useRouter();
 
     const getRandomRecipe = () => {
-        router.push("/ResultPage?type=random&fetch=true"); 
+        router.push("/ResultPage?type=random"); 
         };
 
     const customRecipe = () => {
-        router.push("/SearchPage?type=custom"); 
+        router.push("/SearchPage"); 
     };
+    const goToFavorites = () => {
+        router.push("/FavoritePage");
+    };
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
 
     return(
         <div>
+               {/* Navbar */}
+            <nav >
+                <button onClick={scrollToTop}>Home Page</button>
+                <button onClick={goToFavorites}>Favorite Dish</button>
+            </nav>
             <div>
                 <h1>WHAT TO EAT?</h1>
             </div>
