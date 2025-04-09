@@ -6,35 +6,37 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export default function ViewRecipe() {
     const router = useRouter();
-    const {id} = router.query;
+    const { id, title } = router.query;
 
     const INSTRUCTION_API_URL = `${BASE_URL}/${id}/analyzedInstructions?apiKey=${API_KEY}`;
-    const CARD_API_URL = `${BASE_URL}/${id}/card?apiKey=${API_KEY}`;
 
-    const {data: recipe, loading: recipeLoading, error: recipeError} = fetchAPI(INSTRUCTION_API_URL);
-    const {data: cardData, loading: cardLoading, error: cardError} = fetchAPI(CARD_API_URL);
+    const { data: recipe, loading: recipeLoading, error: recipeError } = fetchAPI(INSTRUCTION_API_URL);
 
-    const loading = recipeLoading || cardLoading;
-    const error = recipeError || cardError;
+    const loading = recipeLoading;
+    const error = recipeError;
 
     return (
         <div>
+            <button onClick={() => router.push("/")}>Return Home</button>
+            <button onClick={() => router.push("/FavoriteDishPage")}>Favorite Dish</button>
+
             <h1>COOKING INSTRUCTION PAGE</h1>
 
-            {/* Display loading message or recipe ID */}
-            {id ? (
-                <p>This is the recipe for dish ID: {id}</p>
-            ) : (
+            {/* Display loading message or recipe ID and title */}
+            {loading ? (
                 <p>Loading...</p>
+            ) : error ? (
+                <p>Error: {error}</p>
+            ) : (
+                id && title && (
+                    <div>
+                        <h2>{title}</h2>
+                    </div>
+                )
             )}
 
-            {/* Display loading message, error, or recipe instructions */}
-            {loading ? (
-                <p>Loading instructions...</p>
-            ) : error ? (
-                <p>{error}</p>
-            ) : recipe && recipe.length > 0 ? (
-                // Display recipe steps if data exists
+            {/* Display recipe instructions */}
+            {recipe && recipe.length > 0 ? (
                 recipe.map((section, sectionIndex) => (
                     <div key={sectionIndex}>
                         <h2>{section.name || "Recipe Instructions"}</h2>
@@ -50,15 +52,7 @@ export default function ViewRecipe() {
                 <p>No recipe instructions available.</p>
             )}
 
-            {/* Display recipe card data (image, recipe details, etc.) */}
-            {cardData ? (
-                <div>
-                    <h2>Recipe Card</h2>
-                    {cardData.url && <img src={cardData.url} alt="Recipe Image" style={{ width: "500px", height: "auto" }} />}
-                </div>
-            ) : (
-                <p>No recipe card available.</p>
-            )}
+            <button onClick={() => router.push(`/NutrientPage?id=${id}&title=${title}`)}>View Nutrition</button>
         </div>
     );
 }
