@@ -40,13 +40,13 @@ const DishCard = ({ dish, onViewNutrition, onViewRecipe, onSaveDish }) => (
             <img src={dish.image} alt={dish.title} style={{ width: "200px" }} />
         </div>
         <div>
-            <h2>{dish.title}</h2>
+            <h3>{dish.title}</h3>
         </div>
         <div>
             <button onClick={() => onViewNutrition(dish.id, dish.title, dish.image)}>View Nutrition</button>
             <button onClick={() => onViewRecipe(dish.id, dish.title, dish.image)}>View Instruction</button>
             <button onClick={() => onSaveDish(dish.id, dish.title, dish.image)}>Save Dish</button>
-        </div>
+        </div><br /><br />
     </div>
 );
 

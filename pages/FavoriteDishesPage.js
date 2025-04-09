@@ -2,12 +2,8 @@ import { useEffect, useState } from "react";
 import styles from '../styles/Favorite.module.css';
 import Link from "next/link";
 
-
-
 export default function FavoriteDishesPage() {
     const [dishData, setDishData] = useState([]);
-    const [src, setSrc] = useState({});
-    const [title, setTitle] = useState({});
 
     useEffect(() => {
         if (typeof window !== "undefined") {
@@ -19,14 +15,10 @@ export default function FavoriteDishesPage() {
         }
     }, []); 
 
-
-
     const removeDish=(removed_id)=>{
         const updatedDishes = dishData.filter(dish => dish.id !== removed_id);
         setDishData(updatedDishes);
-
-
-
+        
         if (typeof window !=="undefined") {
             localStorage.setItem("favoriteDishes", JSON.stringify(updatedDishes));
         }
