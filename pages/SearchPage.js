@@ -1,3 +1,5 @@
+
+
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 
@@ -44,10 +46,11 @@ function GetUserInput() {
 
     return (
         <div>
+            <nav >
+               <button onClick={() => router.push("/")}>Home Page</button>
+            <button onClick={() => router.push("/FavoritePage")}>Favorite Dishes</button>
+            </nav>
             <h1>SEARCH PAGE</h1>
-            <button onClick={() => router.push("/")}>Home Page</button>
-            <button onClick={() => router.push("/FavoriteDishesPage")}>Favorite Dishes</button>
-
             {/* Meal Type Selection */}
             <div>
                 <label>
@@ -86,7 +89,7 @@ function GetUserInput() {
 
             {/* Excluded Ingredients */}
             <div>
-                <label>Excluded Ingredients (optional):</label>
+                <label>Excluded Ingredients:</label>
                 <input
                     type="text"
                     value={tempExclude}
@@ -108,4 +111,6 @@ function GetUserInput() {
     );
 }
 
+
 export default GetUserInput;
+
