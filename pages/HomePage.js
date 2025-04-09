@@ -12,7 +12,7 @@ function Home(){
         router.push("/SearchPage"); 
     };
     const goToFavorites = () => {
-        router.push("/FavoritePage");
+        router.push("/FavoriteDishesPage");
     };
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -32,6 +32,56 @@ function Home(){
             <div>
                 <button onClick={getRandomRecipe}>Get Random Dish</button>
                 <button onClick={customRecipe}>Customize Your Dish</button>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
+                <li>1</li>
             </div>
         </div>
     )
