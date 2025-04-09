@@ -6,12 +6,12 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 // Reusable handler functions
 const useDishActions = (router) => {
-  const handleViewNutrition = (id) => {
-    router.push(`/NutrientPage?id=${id}`);
+  const handleViewNutrition = (id, title, image) => {
+    router.push(`/NutrientPage?id=${id}&title=${title}&image=${image}`);
   };
 
-  const handleViewRecipe = (id) => {
-    router.push(`/InstructionPage?id=${id}`);
+  const handleViewRecipe = (id, title, image) => {
+    router.push(`/InstructionPage?id=${id}&title=${title}&image=${image}`);
   };
 
   const handleSaveDish = (dishId, dishTitle, dishImage) => {
@@ -43,8 +43,8 @@ const DishCard = ({ dish, onViewNutrition, onViewRecipe, onSaveDish }) => (
             <h2>{dish.title}</h2>
         </div>
         <div>
-            <button onClick={() => onViewNutrition(dish.id)}>View Nutrition</button>
-            <button onClick={() => onViewRecipe(dish.id)}>View Instruction</button>
+            <button onClick={() => onViewNutrition(dish.id, dish.title, dish.image)}>View Nutrition</button>
+            <button onClick={() => onViewRecipe(dish.id, dish.title, dish.image)}>View Instruction</button>
             <button onClick={() => onSaveDish(dish.id, dish.title, dish.image)}>Save Dish</button>
         </div>
     </div>
@@ -125,9 +125,7 @@ export default function ResultPage() {
             <button onClick={() => router.push("/HomePage")}>Return Home</button>
             <button onClick={() => router.push("/FavoriteDishesPage")}>Favorite Dishes</button>
         </div>
-        <div>
-            <h1>RESULT PAGE</h1>
-        </div>
+        <br /><br />
         <div>{content}</div>
     </div>
   );

@@ -6,7 +6,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export default function ViewNutrition() {
   const router = useRouter();
-  const { id, title } = router.query;
+  const { id, title, image } = router.query;
 
   const NUTRITION_API_URL = `${BASE_URL}/${id}/nutritionWidget.json?apiKey=${API_KEY}`;
 
@@ -23,11 +23,10 @@ export default function ViewNutrition() {
       <button onClick={() => router.push("/")}>Return Home</button>
       <button onClick={() => router.push("/FavoriteDishesPage")}>Favorite Dishes</button>
       
-
-      <h1>Nutrition Page</h1>
       {nutrition ? (
         <div>
-          <h2>{title}</h2>
+          <h1>{title}</h1>
+          <img src={image} alt={title} style={{ width: "200px" }} />
           {/* Display key nutrition values */}
           <ul>
             {nutrition.nutrients && nutrition.nutrients.map((nutrient, index) => (
@@ -84,7 +83,7 @@ export default function ViewNutrition() {
       ) : (
         <p>No nutrition data available.</p>
       )}
-      <button onClick={() => router.push(`/InstructionPage?id=${id}&title=${title}`)}>View Instructions</button>
+      <button onClick={() => router.push(`/InstructionPage?id=${id}&title=${title}&image=${image}`)}>View Instructions</button>
     </div>
   );
 }

@@ -6,7 +6,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export default function ViewRecipe() {
     const router = useRouter();
-    const { id, title } = router.query;
+    const { id, title, image } = router.query;
 
     const INSTRUCTION_API_URL = `${BASE_URL}/${id}/analyzedInstructions?apiKey=${API_KEY}`;
 
@@ -18,9 +18,7 @@ export default function ViewRecipe() {
     return (
         <div>
             <button onClick={() => router.push("/")}>Return Home</button>
-            <button onClick={() => router.push("/FavoriteDishPage")}>Favorite Dish</button>
-
-            <h1>COOKING INSTRUCTION PAGE</h1>
+            <button onClick={() => router.push("/FavoriteDishesPage")}>Favorite Dish</button>
 
             {/* Display loading message or recipe ID and title */}
             {loading ? (
@@ -30,7 +28,8 @@ export default function ViewRecipe() {
             ) : (
                 id && title && (
                     <div>
-                        <h2>{title}</h2>
+                        <h1>{title}</h1>
+                        <img src={image} alt={title} style={{ width: "200px" }} />
                     </div>
                 )
             )}
@@ -52,7 +51,7 @@ export default function ViewRecipe() {
                 <p>No recipe instructions available.</p>
             )}
 
-            <button onClick={() => router.push(`/NutrientPage?id=${id}&title=${title}`)}>View Nutrition</button>
+            <button onClick={() => router.push(`/NutrientPage?id=${id}&title=${title}&image=${image}`)}>View Nutrition</button>
         </div>
     );
 }
