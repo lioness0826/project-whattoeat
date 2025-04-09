@@ -8,7 +8,8 @@ export default function ViewNutrition() {
   const router = useRouter();
   const { id, title, image } = router.query;
 
-  const NUTRITION_API_URL = `${BASE_URL}/${id}/nutritionWidget.json?apiKey=${API_KEY}`;
+  // Check if id is ready before forming URL
+  const NUTRITION_API_URL = id ? `${BASE_URL}/${id}/nutritionWidget.json?apiKey=${API_KEY}` : null;
 
   const { data: nutrition, loading: nutritionLoading, error: nutritionError } = fetchAPI(NUTRITION_API_URL);
 

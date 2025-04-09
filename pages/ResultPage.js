@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { fetchAPI } from "./components/fetchAPI";
+import { useState, useEffect} from "react";
 
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -52,9 +53,12 @@ const DishCard = ({ dish, onViewNutrition, onViewRecipe, onSaveDish }) => (
 
 function GetRandomDish() {
     const router = useRouter();
+    const { time } = router.query;
     const { handleViewNutrition, handleViewRecipe, handleSaveDish } = useDishActions(router);
   
-    const RANDOM_API_URL = `${BASE_URL}/random?apiKey=${API_KEY}&number=1`;
+    // Store time param inside random url to bypass cached check when user clicks "Get Random Dish".
+    const RANDOM_API_URL = time ? `${BASE_URL}/random?apiKey=${API_KEY}&number=1&time=${time}` : null;
+   
     const { data, loading, error } = fetchAPI(RANDOM_API_URL);
   
     if (loading) return <p>Loading...</p>;
@@ -81,7 +85,10 @@ function GetCustomDish() {
     const { mealType, includeIngredients, excludeIngredients } = router.query;
     const { handleViewNutrition, handleViewRecipe, handleSaveDish } = useDishActions(router);
 
-    const CUSTOMIZED_API_URL = `${BASE_URL}/complexSearch?apiKey=${API_KEY}&type=${mealType}&includeIngredients=${includeIngredients}&excludeIngredients=${excludeIngredients}&number=5`;
+    const paramsReady = mealType && includeIngredients;
+
+    // Check if input params are ready before forming URL
+    const CUSTOMIZED_API_URL = paramsReady ? `${BASE_URL}/complexSearch?apiKey=${API_KEY}&type=${mealType}&includeIngredients=${includeIngredients}&excludeIngredients=${excludeIngredients}&number=5` : null;
     const { data, loading, error } = fetchAPI(CUSTOMIZED_API_URL);
 
     if (loading) return <p>Loading...</p>;
@@ -111,13 +118,15 @@ function GetCustomDish() {
 export default function ResultPage() {
   const router = useRouter();
   const { type } = router.query;
+  const [content, setContent] = useState(null);
 
-  let content;
-  if (type === "random") {
-    content = <GetRandomDish />;
-  } else if (type === "custom") {
-    content = <GetCustomDish />;
-  }
+  useEffect(() => {
+    if (type === "random") {
+      setContent(<GetRandomDish />);
+    } else if (type === "custom") {
+      setContent(<GetCustomDish />);
+    }
+  }, [type]);
 
   return (
     <div>

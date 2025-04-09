@@ -8,7 +8,8 @@ export default function ViewRecipe() {
     const router = useRouter();
     const { id, title, image } = router.query;
 
-    const INSTRUCTION_API_URL = `${BASE_URL}/${id}/analyzedInstructions?apiKey=${API_KEY}`;
+    // Check if id is ready before forming URL
+    const INSTRUCTION_API_URL = id ? `${BASE_URL}/${id}/analyzedInstructions?apiKey=${API_KEY}` : null;
 
     const { data: recipe, loading: recipeLoading, error: recipeError } = fetchAPI(INSTRUCTION_API_URL);
 

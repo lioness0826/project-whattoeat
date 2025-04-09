@@ -6,8 +6,9 @@ function Home(){
     const router = useRouter();
 
     const getRandomRecipe = () => {
-        router.push("/ResultPage?type=random"); 
-        };
+        const timestamp = Date.now();
+        router.push(`/ResultPage?type=random&time=${timestamp}`); 
+    };
 
     const customRecipe = () => {
         router.push("/SearchPage"); 
