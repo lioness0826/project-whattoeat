@@ -41,6 +41,7 @@ export default function FavoriteDishesPage() {
                         <img src={dish.dish_image} alt="dish-img" style={{width: '150px'}} />
                         <h3>{dish.dish_title}</h3>
                         <button onClick={()=>removeDish(dish.id)}>Mark as completed</button>
+                        <br /><br /><br />
                     </li>   
                 ))}
                 </ul>)}

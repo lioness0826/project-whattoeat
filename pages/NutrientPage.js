@@ -20,7 +20,7 @@ export default function ViewNutrition() {
 
   return (
     <div>
-      <button onClick={() => router.push("/")}>Return Home</button>
+      <button onClick={() => router.push("/")}>Home</button>
       <button onClick={() => router.push("/FavoriteDishesPage")}>Favorite Dishes</button>
       
       {nutrition ? (

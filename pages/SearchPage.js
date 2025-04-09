@@ -45,7 +45,7 @@ function GetUserInput() {
     return (
         <div>
             <nav >
-               <button onClick={() => router.push("/")}>Home Page</button>
+               <button onClick={() => router.push("/")}>Home</button>
                 <button onClick={() => router.push("/FavoriteDishesPage")}>Favorite Dishes</button>
             </nav>
             <h1>Customize Your Dish!</h1>

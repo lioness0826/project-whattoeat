@@ -122,7 +122,7 @@ export default function ResultPage() {
   return (
     <div>
         <div>
-            <button onClick={() => router.push("/HomePage")}>Return Home</button>
+            <button onClick={() => router.push("/HomePage")}>Home</button>
             <button onClick={() => router.push("/FavoriteDishesPage")}>Favorite Dishes</button>
         </div>
         <br /><br />

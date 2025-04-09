@@ -1,5 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
+import styles from '../styles/HomePage.module.css'; 
 
 function Home(){
     const router = useRouter();
@@ -21,10 +22,10 @@ function Home(){
 
     return(
         <div>
-               {/* Navbar */}
-            <nav >
-                <button onClick={scrollToTop}>Home Page</button>
-                <button onClick={goToFavorites}>Favorite Dish</button>
+            {/* Navbar */}
+            <nav className={styles.navbar}>
+                <button onClick={scrollToTop}>Home</button>
+                <button onClick={goToFavorites}>Favorite Dishes</button>
             </nav>
             <div>
                 <h1>WHAT TO EAT?</h1>
@@ -32,56 +33,6 @@ function Home(){
             <div>
                 <button onClick={getRandomRecipe}>Get Random Dish</button>
                 <button onClick={customRecipe}>Customize Your Dish</button>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
             </div>
         </div>
     )

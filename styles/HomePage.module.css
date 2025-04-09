@@ -1,0 +1,18 @@
+.nav{
+  background-color: rgb(223, 149, 58);
+  color: black;
+  padding: 10px;
+}
+
+.navbar{
+  flex-direction: row;
+  justify-content: center;
+  gap: 100px;
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+}
