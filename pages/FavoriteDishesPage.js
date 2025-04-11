@@ -1,9 +1,19 @@
 import { useEffect, useState } from "react";
 import styles from '../styles/Favorite.module.css';
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function FavoriteDishesPage() {
     const [dishData, setDishData] = useState([]);
+    const router = useRouter();
+
+    const handleViewNutrition = (id, title, image) => {
+        router.push(`/NutrientPage?id=${id}&title=${title}&image=${image}`);
+      };
+    
+      const handleViewRecipe = (id, title, image) => {
+        router.push(`/InstructionPage?id=${id}&title=${title}&image=${image}`);
+      };
 
     useEffect(() => {
         if (typeof window !== "undefined") {
@@ -40,6 +50,8 @@ export default function FavoriteDishesPage() {
                     <li key={dish.id} className={styles.favList}>
                         <img src={dish.dish_image} alt="dish-img" style={{width: '150px'}} />
                         <h3>{dish.dish_title}</h3>
+                        <button onClick={()=>handleViewNutrition(dish.dish_id, dish.dish_title, dish.dish_image)}>View Nutrition</button>
+                        <button onClick={()=>handleViewRecipe(dish.dish_id, dish.dish_title, dish.dish_image)}>View Instruction</button>
                         <button onClick={()=>removeDish(dish.id)}>Mark as completed</button>
                         <br /><br /><br />
                     </li>   
