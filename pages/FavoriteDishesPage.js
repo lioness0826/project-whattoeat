@@ -46,14 +46,15 @@ export default function FavoriteDishesPage() {
                 </div>
                 
                 {dishData.length===0?(<div><p>No saved dishes.</p></div>):
-                (<ul>{dishData.map(dish=>(
+                (<ul className={styles.listArea}>{dishData.map(dish=>(
                     <li key={dish.id} className={styles.favList}>
                         <img src={dish.dish_image} alt="dish-img" style={{width: '150px'}} />
-                        <h3>{dish.dish_title}</h3>
-                        <button onClick={()=>handleViewNutrition(dish.dish_id, dish.dish_title, dish.dish_image)}>View Nutrition</button>
-                        <button onClick={()=>handleViewRecipe(dish.dish_id, dish.dish_title, dish.dish_image)}>View Instruction</button>
-                        <button onClick={()=>removeDish(dish.id)}>Mark as completed</button>
-                        <br /><br /><br />
+                        <h3 className={styles.favTitle}>{dish.dish_title}</h3>
+                        <div className={styles.buttonList}>
+                            <button onClick={()=>handleViewNutrition(dish.dish_id, dish.dish_title, dish.dish_image)} className={styles.btn}>View Nutrition</button>
+                            <button onClick={()=>handleViewRecipe(dish.dish_id, dish.dish_title, dish.dish_image)} className={styles.btn}>View Instruction</button>
+                            <button onClick={()=>removeDish(dish.id)} className={styles.btn}>Mark as completed</button>
+                        </div>
                     </li>   
                 ))}
                 </ul>)}
