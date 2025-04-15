@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import styles from '../styles/SearchPage.module.css'; // Import CSS Module
 
@@ -13,6 +13,7 @@ function GetUserInput() {
     const [excludeIngredients, setExcludeIngredients] = useState([]);
     const [tempInclude, setTempInclude] = useState("");
     const [tempExclude, setTempExclude] = useState("");
+    const [dishCount, setDishCount] = useState(0);
 
     // Handle adding and removing ingredients
     const addIngredient = (type) => {
@@ -43,18 +44,26 @@ function GetUserInput() {
         router.push(`/ResultPage?type=custom&mealType=${mealType}&includeIngredients=${includeIngredients.join(",")}&excludeIngredients=${excludeIngredients.join(",")}`);
     };
 
+    // Load favorite dishes count
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            const saved = JSON.parse(localStorage.getItem("favoriteDishes")) || [];
+            setDishCount(saved.length);
+        }
+    }, []);
+
     return (
-        <div className={styles.container}>
+        <div>
             <nav className={styles.navbar}>
-                <button className={styles.navButton} onClick={() => router.push("/")}>Home Page</button>
-                <div className={styles.appName}> What To Eat?</div> 
-                <button className={styles.navButton} onClick={() => router.push("/FavoritePage")}>Favorite Dishes</button>
+                <button className={styles.navButton} onClick={() => router.push("/")}>Home</button>
+                <div className={styles.appName}> WhatToEat?</div> 
+                <button className={styles.navButton} onClick={() => router.push("/FavoriteDishesPage")}>My List ({dishCount})</button>
             </nav>
-            <h1 className={styles.title}>SEARCH PAGE</h1>
             
+            <div className={styles.container}>
             {/* Meal Type Selection */}
             <div className={styles.section}>
-                <label>
+                <label className={styles.label}>
                     Meal Type:
                     <select className={styles.select} value={mealType} onChange={(e) => setMealType(e.target.value)}>
                         <option value="">Select Meal Type</option>
@@ -70,7 +79,7 @@ function GetUserInput() {
 
             {/* Included Ingredients */}
             <div className={styles.section}>
-                <label>Included Ingredients:</label>
+                <label className={styles.label}>Included Ingredients:</label>
                 <input
                     className={styles.input}
                     type="text"
@@ -89,7 +98,7 @@ function GetUserInput() {
 
             {/* Excluded Ingredients */}
             <div className={styles.section}>
-                <label>Excluded Ingredients:</label>
+                <label className={styles.label}>Excluded Ingredients:</label>
                 <input
                     className={styles.input}
                     type="text"
@@ -108,6 +117,7 @@ function GetUserInput() {
 
             {/* Submit Button */}
             <button className={styles.generateButton} onClick={handleCustomOption}>Generate Dishes</button>
+            </div>
         </div>
     );
 }

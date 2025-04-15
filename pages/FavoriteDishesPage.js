@@ -6,14 +6,15 @@ import { useRouter } from "next/router";
 export default function FavoriteDishesPage() {
     const [dishData, setDishData] = useState([]);
     const router = useRouter();
+    const [dishCount, setDishCount] = useState(0);
 
     const handleViewNutrition = (id, title, image) => {
         router.push(`/NutrientPage?id=${id}&title=${title}&image=${image}`);
-      };
+    };
     
-      const handleViewRecipe = (id, title, image) => {
-        router.push(`/InstructionPage?id=${id}&title=${title}&image=${image}`);
-      };
+    const handleViewRecipe = (id, title, image) => {
+    router.push(`/InstructionPage?id=${id}&title=${title}&image=${image}`);
+    };
 
     useEffect(() => {
         if (typeof window !== "undefined") {
@@ -23,7 +24,7 @@ export default function FavoriteDishesPage() {
 
             }
         }
-    }, []); 
+    }, []);
 
     const removeDish=(removed_id)=>{
         const updatedDishes = dishData.filter(dish => dish.id !== removed_id);
@@ -34,11 +35,16 @@ export default function FavoriteDishesPage() {
         }
     };
 
+    // Load favorite dishes count
+    useEffect(() => {
+        setDishCount(dishData.length);
+    }, [dishData]);
+
     return (
         <div className={styles.favPage}>
             <nav className={styles.navbar}>
                 <Link href={"/HomePage"} className={styles.nav}>Home</Link>
-                <Link href={"/FavoriteDishesPage"} className={styles.nav} scroll={true}>Favorite Dishes</Link>
+                <Link href={"/FavoriteDishesPage"} className={styles.nav} scroll={true}>My List ({dishCount})</Link>
             </nav>
             <div className={styles.favContent}>
                 <div className={styles.favTitle}>
@@ -46,14 +52,15 @@ export default function FavoriteDishesPage() {
                 </div>
                 
                 {dishData.length===0?(<div><p>No saved dishes.</p></div>):
-                (<ul>{dishData.map(dish=>(
+                 (<ul className={styles.listArea}>{dishData.map(dish=>(
                     <li key={dish.id} className={styles.favList}>
                         <img src={dish.dish_image} alt="dish-img" style={{width: '150px'}} />
-                        <h3>{dish.dish_title}</h3>
-                        <button onClick={()=>handleViewNutrition(dish.dish_id, dish.dish_title, dish.dish_image)}>View Nutrition</button>
-                        <button onClick={()=>handleViewRecipe(dish.dish_id, dish.dish_title, dish.dish_image)}>View Instruction</button>
-                        <button onClick={()=>removeDish(dish.id)}>Mark as completed</button>
-                        <br /><br /><br />
+                        <h3 className={styles.favTitle}>{dish.dish_title}</h3>
+                        <div className={styles.buttonList}>
+                            <button onClick={()=>handleViewNutrition(dish.dish_id, dish.dish_title, dish.dish_image)} className={styles.btn}>View Nutrition</button>
+                            <button onClick={()=>handleViewRecipe(dish.dish_id, dish.dish_title, dish.dish_image)} className={styles.btn}>View Recipe</button>
+                            <button onClick={()=>removeDish(dish.id)} className={styles.btn}>Mark done</button>
+                        </div>
                     </li>   
                 ))}
                 </ul>)}

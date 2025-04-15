@@ -24,6 +24,9 @@
 .favPage{
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
     
 
@@ -34,8 +37,36 @@
     align-items: center;
     margin: 30px;
     padding: 0;
+    width: 50%;
+}
+
+.listArea{
+    width: 80%;
+    margin: 0;
+    padding: 0; 
+    height: auto;
 }
 
 .favList{
     list-style: none;
+    background-color: antiquewhite;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    margin-bottom: 20px;
+}
+
+.btn{
+    border: none;
+    margin: 5px;
+    width: 140px;
+    height: 30px;
+    background-color: rgb(223, 149, 58);
+    cursor: pointer;
+}
+
+.favTitle{
+    padding: 0 20px;
 }

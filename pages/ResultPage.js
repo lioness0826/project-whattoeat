@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { fetchAPI } from "./components/fetchAPI";
 import { useState, useEffect} from "react";
+import styles from '../styles/ResultPage.module.css';
 
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -36,18 +37,18 @@ const useDishActions = (router) => {
 
 // Reusable DishCard component
 const DishCard = ({ dish, onViewNutrition, onViewRecipe, onSaveDish }) => (
-    <div key={dish.id}>
-        <div>
-            <img src={dish.image} alt={dish.title} style={{ width: "200px" }} />
+    <div key={dish.id} className={styles.card}>
+        <div className={styles.imageContainer}>
+            <img className={styles.image} src={dish.image} alt={dish.title} style={{ width: "200px" }} />
         </div>
-        <div>
+        <div className={styles.title}>
             <h3>{dish.title}</h3>
         </div>
-        <div>
-            <button onClick={() => onViewNutrition(dish.id, dish.title, dish.image)}>View Nutrition</button>
-            <button onClick={() => onViewRecipe(dish.id, dish.title, dish.image)}>View Instruction</button>
-            <button onClick={() => onSaveDish(dish.id, dish.title, dish.image)}>Save Dish</button>
-        </div><br /><br />
+        <div className={styles.buttonGroup}>
+            <button className={styles.button} onClick={() => onViewNutrition(dish.id, dish.title, dish.image)}>View Nutrition</button>
+            <button className={styles.button} onClick={() => onViewRecipe(dish.id, dish.title, dish.image)}>View Recipe</button>
+            <button className={styles.button} onClick={() => onSaveDish(dish.id, dish.title, dish.image)}>Save Dish</button>
+        </div>
     </div>
 );
 
@@ -71,12 +72,15 @@ function GetRandomDish() {
     }
   
     return (
-        <DishCard
-            dish={dish}
-            onViewNutrition={handleViewNutrition}
-            onViewRecipe={handleViewRecipe}
-            onSaveDish={handleSaveDish}
-        />
+        <div className={styles.centerSingle}>
+            <DishCard
+                className={styles.singleCard}
+                dish={dish}
+                onViewNutrition={handleViewNutrition}
+                onViewRecipe={handleViewRecipe}
+                onSaveDish={handleSaveDish}
+            />
+        </div>
     );
   }
   
@@ -88,7 +92,7 @@ function GetCustomDish() {
     const paramsReady = mealType && includeIngredients;
 
     // Check if input params are ready before forming URL
-    const CUSTOMIZED_API_URL = paramsReady ? `${BASE_URL}/complexSearch?apiKey=${API_KEY}&type=${mealType}&includeIngredients=${includeIngredients}&excludeIngredients=${excludeIngredients}&number=5` : null;
+    const CUSTOMIZED_API_URL = paramsReady ? `${BASE_URL}/complexSearch?apiKey=${API_KEY}&type=${mealType}&includeIngredients=${includeIngredients}&excludeIngredients=${excludeIngredients}&number=15` : null;
     const { data, loading, error } = fetchAPI(CUSTOMIZED_API_URL);
 
     if (loading) return <p>Loading...</p>;
@@ -101,7 +105,7 @@ function GetCustomDish() {
     }
 
     return (
-        <div>
+        <div className={styles.dishGrid}>
             {dishes.map((dish) => (
                 <DishCard
                     key={dish.id}
@@ -119,6 +123,7 @@ export default function ResultPage() {
   const router = useRouter();
   const { type } = router.query;
   const [content, setContent] = useState(null);
+  const [dishCount, setDishCount] = useState(0);
 
   useEffect(() => {
     if (type === "random") {
@@ -128,14 +133,23 @@ export default function ResultPage() {
     }
   }, [type]);
 
+  // Load favorite dishes count
+  useEffect(() => {
+      if (typeof window !== "undefined") {
+          const saved = JSON.parse(localStorage.getItem("favoriteDishes")) || [];
+          setDishCount(saved.length);
+      }
+  }, []);
+
   return (
     <div>
-        <div>
-            <button onClick={() => router.push("/HomePage")}>Home</button>
-            <button onClick={() => router.push("/FavoriteDishesPage")}>Favorite Dishes</button>
-        </div>
+        <nav className={styles.navbar}>
+            <button className={styles.navButton} onClick={() => router.push("/HomePage")}>Home</button>
+            <div className={styles.appName}> WhatToEat?</div> 
+            <button className={styles.navButton} onClick={() => router.push("/FavoriteDishesPage")}>My List ({dishCount})</button>
+        </nav>
         <br /><br />
-        <div>{content}</div>
+        <div className={styles.container}>{content}</div>
     </div>
   );
 }

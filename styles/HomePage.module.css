@@ -1,13 +1,13 @@
 .page {
   min-height: 100vh;
   background-color: #fefefe;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
 }
 
 .navbar {
   display: flex;
   justify-content: flex-end;
-  padding: 10px 20px;
+  padding: 1rem 2rem;
   background-color: #95c8d8;
   position: sticky;
   top: 0;
@@ -18,8 +18,8 @@
 .navButton {
   margin-left: 10px;
   padding: 8px 14px;
-  font-size: 0.95rem;
-  background-color: #f5c77e;
+  font-size: 0.9rem;
+  background-color: #fdfdfd;
   color: #333;
   border: none;
   border-radius: 5px;
@@ -28,7 +28,7 @@
 }
 
 .navButton:hover {
-  background-color: #edd5c0;
+  background-color: lightgray;
 }
 
 .main {
