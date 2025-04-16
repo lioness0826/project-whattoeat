@@ -87,13 +87,16 @@ function GetUserInput() {
                     onChange={(e) => setTempInclude(e.target.value)}
                 />
                 <button className={styles.button} onClick={() => addIngredient("include")}>Add</button>
-                <ul>
+                <ul style={{ listStyleType: "none", padding: 0 }}>
                     {includeIngredients.map((item, index) => (
-                        <li key={index}>
-                            {item} <button className={styles.button} onClick={() => removeIngredient("include", index)}>Remove</button>
+                        <li key={index} className={styles.ingredientItem}>
+                        <span>{item}</span>
+                        <button className={styles.button} onClick={() => removeIngredient("include", index)}>Remove</button>
                         </li>
-                    ))}
+                     ))}
                 </ul>
+
+
             </div>
 
             {/* Excluded Ingredients */}
@@ -106,12 +109,13 @@ function GetUserInput() {
                     onChange={(e) => setTempExclude(e.target.value)}
                 />
                 <button className={styles.button} onClick={() => addIngredient("exclude")}>Add</button>
-                <ul>
+                <ul style={{ listStyleType: "none", padding: 0 }}>
                     {excludeIngredients.map((item, index) => (
-                        <li key={index}>
-                            {item} <button className={styles.button} onClick={() => removeIngredient("exclude", index)}>Remove</button>
+                        <li key={index} className={styles.ingredientItem}>
+                        <span>{item}</span>
+                        <button className={styles.button} onClick={() => removeIngredient("include", index)}>Remove</button>
                         </li>
-                    ))}
+                     ))}
                 </ul>
             </div>
 
