@@ -76,7 +76,6 @@
 }
 
 .btn{
-
     padding: 0.5rem 1rem;
     background-color: #ff9800;
     color: white;
@@ -117,15 +116,4 @@
     .btn{
         width: 100%;
     }
-
-    border: none;
-    margin: 5px;
-    width: 140px;
-    height: 30px;
-    background-color: rgb(223, 149, 58);
-    cursor: pointer;
-}
-
-.favTitle{
-    padding: 0 20px;
 }
