@@ -52,7 +52,8 @@ export default function FavoriteDishesPage() {
                     <h2>Favorite Dishes</h2>
                 </div>
                 
-                {dishData.length===0?(<h2 className={styles.favTitle}>No saved dishes.</h2>):
+
+                {dishData.length===0?(<div><p>No saved dishes.</p></div>):
                  (<ul className={styles.listArea}>{dishData.map(dish=>(
                     <li key={dish.id} className={styles.favList}>
                         <img src={dish.dish_image} alt="dish-img" style={{width: '150px'}} />

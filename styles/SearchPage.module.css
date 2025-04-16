@@ -1,0 +1,97 @@
+.container {
+    font-family: Arial, sans-serif;
+    padding: 2rem;
+    background-color: #fdfdfd;
+    min-height: 100vh;
+    font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #95c8d8;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+}
+
+.navButton {
+    padding: 0.5rem 1rem;
+    background-color: #fdfdfd;
+    color: black;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; 
+    font-size: 0.9rem;
+}
+
+.navButton:hover {
+    background-color: lightgray; 
+}
+
+.appName {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    flex-grow: 1; 
+}
+
+.section {
+    margin-bottom: 1.5rem;
+}
+
+.input {
+    padding: 0.5rem;
+    margin-right: 0.5rem;
+    margin-left: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    width: 250px;
+    transition: border-color 0.3s ease; 
+}
+
+.select {
+    margin-left: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    transition: border-color 0.3s ease; 
+}
+
+.label {
+    font-size: 1rem; 
+}
+
+.button {
+    padding: 0.5rem 1rem;
+    background-color: #ff9800;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 0.9rem; 
+}
+
+.button:hover {
+    background-color: #e68900; 
+}
+
+.generateButton {
+    padding: 0.75rem 1.5rem;
+    background-color: #ff9800;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease-in-out; 
+}
+
+.generateButton:hover {
+    background-color: #e68900; 
+    transform: scale(1.05); 
+}

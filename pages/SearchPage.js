@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import styles from '../styles/SearchPage.module.css'; // Import CSS Module
 
 function GetUserInput() {
     const router = useRouter();
@@ -12,6 +13,7 @@ function GetUserInput() {
     const [excludeIngredients, setExcludeIngredients] = useState([]);
     const [tempInclude, setTempInclude] = useState("");
     const [tempExclude, setTempExclude] = useState("");
+    const [dishCount, setDishCount] = useState(0);
 
     // Handle adding and removing ingredients
     const addIngredient = (type) => {
@@ -42,18 +44,28 @@ function GetUserInput() {
         router.push(`/ResultPage?type=custom&mealType=${mealType}&includeIngredients=${includeIngredients.join(",")}&excludeIngredients=${excludeIngredients.join(",")}`);
     };
 
+    // Load favorite dishes count
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            const saved = JSON.parse(localStorage.getItem("favoriteDishes")) || [];
+            setDishCount(saved.length);
+        }
+    }, []);
+
     return (
         <div>
-            <nav >
-               <button onClick={() => router.push("/")}>Home</button>
-                <button onClick={() => router.push("/FavoriteDishesPage")}>Favorite Dishes</button>
+            <nav className={styles.navbar}>
+                <button className={styles.navButton} onClick={() => router.push("/")}>Home</button>
+                <div className={styles.appName}> WhatToEat?</div> 
+                <button className={styles.navButton} onClick={() => router.push("/FavoriteDishesPage")}>My List ({dishCount})</button>
             </nav>
-            <h1>Customize Your Dish!</h1>
+            
+            <div className={styles.container}>
             {/* Meal Type Selection */}
-            <div>
-                <label>
+            <div className={styles.section}>
+                <label className={styles.label}>
                     Meal Type:
-                    <select value={mealType} onChange={(e) => setMealType(e.target.value)}>
+                    <select className={styles.select} value={mealType} onChange={(e) => setMealType(e.target.value)}>
                         <option value="">Select Meal Type</option>
                         <option value="Breakfast">Breakfast</option>
                         <option value="Lunch">Lunch</option>
@@ -63,46 +75,49 @@ function GetUserInput() {
                         <option value="Drink">Drink</option>
                     </select>
                 </label>
-            </div><br />
+            </div>
 
             {/* Included Ingredients */}
-            <div>
-                <label>Included Ingredients:</label>
+            <div className={styles.section}>
+                <label className={styles.label}>Included Ingredients:</label>
                 <input
+                    className={styles.input}
                     type="text"
                     value={tempInclude}
                     onChange={(e) => setTempInclude(e.target.value)}
                 />
-                <button onClick={() => addIngredient("include")}>Add</button>
+                <button className={styles.button} onClick={() => addIngredient("include")}>Add</button>
                 <ul>
                     {includeIngredients.map((item, index) => (
                         <li key={index}>
-                            {item} <button onClick={() => removeIngredient("include", index)}>Remove</button>
+                            {item} <button className={styles.button} onClick={() => removeIngredient("include", index)}>Remove</button>
                         </li>
                     ))}
                 </ul>
             </div>
 
             {/* Excluded Ingredients */}
-            <div>
-                <label>Excluded Ingredients (optional):</label>
+            <div className={styles.section}>
+                <label className={styles.label}>Excluded Ingredients:</label>
                 <input
+                    className={styles.input}
                     type="text"
                     value={tempExclude}
                     onChange={(e) => setTempExclude(e.target.value)}
                 />
-                <button onClick={() => addIngredient("exclude")}>Add</button>
+                <button className={styles.button} onClick={() => addIngredient("exclude")}>Add</button>
                 <ul>
                     {excludeIngredients.map((item, index) => (
                         <li key={index}>
-                            {item} <button onClick={() => removeIngredient("exclude", index)}>Remove</button>
+                            {item} <button className={styles.button} onClick={() => removeIngredient("exclude", index)}>Remove</button>
                         </li>
                     ))}
                 </ul>
             </div>
 
             {/* Submit Button */}
-            <button onClick={handleCustomOption}>Generate Dishes</button>
+            <button className={styles.generateButton} onClick={handleCustomOption}>Generate Dishes</button>
+            </div>
         </div>
     );
 }
