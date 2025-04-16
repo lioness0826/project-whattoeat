@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { fetchAPI } from "./components/fetchAPI";
+import fetchAPI from "./components/fetchAPI";
 import styles from "../styles/Instruction.module.css";
 import { useState, useEffect} from "react";
 
