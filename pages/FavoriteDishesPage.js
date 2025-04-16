@@ -44,13 +44,15 @@ export default function FavoriteDishesPage() {
         <div className={styles.favPage}>
             <nav className={styles.navbar}>
                 <Link href={"/HomePage"} className={styles.nav}>Home</Link>
+                <div className={styles.appName}> WhatToEat?</div> 
                 <Link href={"/FavoriteDishesPage"} className={styles.nav} scroll={true}>My List ({dishCount})</Link>
             </nav>
             <div className={styles.favContent}>
                 <div className={styles.favTitle}>
-                    <h1>Favorite Dishes</h1>
+                    <h2>Favorite Dishes</h2>
                 </div>
                 
+
                 {dishData.length===0?(<div><p>No saved dishes.</p></div>):
                  (<ul className={styles.listArea}>{dishData.map(dish=>(
                     <li key={dish.id} className={styles.favList}>
