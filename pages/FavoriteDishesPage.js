@@ -59,7 +59,7 @@ export default function FavoriteDishesPage() {
                         <div className={styles.buttonList}>
                             <button onClick={()=>handleViewNutrition(dish.dish_id, dish.dish_title, dish.dish_image)} className={styles.btn}>View Nutrition</button>
                             <button onClick={()=>handleViewRecipe(dish.dish_id, dish.dish_title, dish.dish_image)} className={styles.btn}>View Recipe</button>
-                            <button onClick={()=>removeDish(dish.id)} className={styles.btn}>Mark done</button>
+                            <button onClick={()=>removeDish(dish.id)} className={styles.btn}>Mark Done</button>
                         </div>
                     </li>   
                 ))}

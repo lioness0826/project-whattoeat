@@ -7,7 +7,7 @@ const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 // Reusable handler functions
-const useDishActions = (router) => {
+const useDishActions = (router, setDishCount) => {
   const handleViewNutrition = (id, title, image) => {
     router.push(`/NutrientPage?id=${id}&title=${title}&image=${image}`);
   };
@@ -29,6 +29,7 @@ const useDishActions = (router) => {
       savedDishes.push(newDish);
       console.log(savedDishes);
       localStorage.setItem("favoriteDishes", JSON.stringify(savedDishes));
+      setDishCount(savedDishes.length);
     }
   };
 
@@ -52,104 +53,89 @@ const DishCard = ({ dish, onViewNutrition, onViewRecipe, onSaveDish }) => (
     </div>
 );
 
-function GetRandomDish() {
-    const router = useRouter();
-    const { time } = router.query;
-    const { handleViewNutrition, handleViewRecipe, handleSaveDish } = useDishActions(router);
-  
-    // Store time param inside random url to bypass cached check when user clicks "Get Random Dish".
-    const RANDOM_API_URL = time ? `${BASE_URL}/random?apiKey=${API_KEY}&number=1&time=${time}` : null;
-   
-    const { data, loading, error } = fetchAPI(RANDOM_API_URL);
-  
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error}</p>;
-  
-    const dish = data?.recipes?.[0];
-
-    if (dish.length === 0) {
-        return <p>No dish found.</p>;
-    }
-  
-    return (
-        <div className={styles.centerSingle}>
-            <DishCard
-                className={styles.singleCard}
-                dish={dish}
-                onViewNutrition={handleViewNutrition}
-                onViewRecipe={handleViewRecipe}
-                onSaveDish={handleSaveDish}
-            />
-        </div>
-    );
-  }
-  
-function GetCustomDish() {
-    const router = useRouter();
-    const { mealType, includeIngredients, excludeIngredients } = router.query;
-    const { handleViewNutrition, handleViewRecipe, handleSaveDish } = useDishActions(router);
-
-    const paramsReady = mealType && includeIngredients;
-
-    // Check if input params are ready before forming URL
-    const CUSTOMIZED_API_URL = paramsReady ? `${BASE_URL}/complexSearch?apiKey=${API_KEY}&type=${mealType}&includeIngredients=${includeIngredients}&excludeIngredients=${excludeIngredients}&number=15` : null;
-    const { data, loading, error } = fetchAPI(CUSTOMIZED_API_URL);
-
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error}</p>;
-
-    const dishes = data?.results || [];
-
-    if (dishes.length === 0) {
-        return <p>No dish found.</p>;
-    }
-
-    return (
-        <div className={styles.dishGrid}>
-            {dishes.map((dish) => (
-                <DishCard
-                    key={dish.id}
-                    dish={dish}
-                    onViewNutrition={handleViewNutrition}
-                    onViewRecipe={handleViewRecipe}
-                    onSaveDish={handleSaveDish}
-                />
-            ))}
-        </div>
-    );
-}
-
 export default function ResultPage() {
-  const router = useRouter();
-  const { type } = router.query;
-  const [content, setContent] = useState(null);
-  const [dishCount, setDishCount] = useState(0);
-
-  useEffect(() => {
-    if (type === "random") {
-      setContent(<GetRandomDish />);
-    } else if (type === "custom") {
-      setContent(<GetCustomDish />);
-    }
-  }, [type]);
-
-  // Load favorite dishes count
-  useEffect(() => {
-      if (typeof window !== "undefined") {
-          const saved = JSON.parse(localStorage.getItem("favoriteDishes")) || [];
-          setDishCount(saved.length);
+    const router = useRouter();
+    const { type } = router.query;
+    const [content, setContent] = useState(null);
+    const [dishCount, setDishCount] = useState(0);
+  
+    const { handleViewNutrition, handleViewRecipe, handleSaveDish } = useDishActions(router, setDishCount);
+  
+    useEffect(() => {
+      if (type === "random") {
+        setContent(<GetRandomDish />);
+      } else if (type === "custom") {
+        setContent(<GetCustomDish />);
       }
-  }, []);
-
-  return (
-    <div>
+    }, [type]);
+  
+    useEffect(() => {
+      if (typeof window !== "undefined") {
+        const saved = JSON.parse(localStorage.getItem("favoriteDishes")) || [];
+        setDishCount(saved.length);
+      }
+    }, []);
+  
+    function GetRandomDish() {
+      const { time } = router.query;
+      const RANDOM_API_URL = time ? `${BASE_URL}/random?apiKey=${API_KEY}&number=1&time=${time}` : null;
+      const { data, loading, error } = fetchAPI(RANDOM_API_URL);
+      if (loading) return <p>Loading...</p>;
+      if (error) return <p>Error: {error}</p>;
+      const dish = data?.recipes?.[0];
+      if (!dish) return <p>No dish found.</p>;
+  
+      return (
+        <div className={styles.centerSingle}>
+          <DishCard
+            dish={dish}
+            onViewNutrition={handleViewNutrition}
+            onViewRecipe={handleViewRecipe}
+            onSaveDish={handleSaveDish}
+          />
+        </div>
+      );
+    }
+  
+    function GetCustomDish() {
+      const { mealType, includeIngredients, excludeIngredients } = router.query;
+      const paramsReady = mealType && includeIngredients;
+      const CUSTOMIZED_API_URL = paramsReady
+        ? `${BASE_URL}/complexSearch?apiKey=${API_KEY}&type=${mealType}&includeIngredients=${includeIngredients}&excludeIngredients=${excludeIngredients}&number=15`
+        : null;
+      const { data, loading, error } = fetchAPI(CUSTOMIZED_API_URL);
+      if (loading) return <p>Loading...</p>;
+      if (error) return <p>Error: {error}</p>;
+      const dishes = data?.results || [];
+  
+      if (dishes.length === 0) {
+        return <p>No dish found.</p>;
+      }
+  
+      return (
+        <div className={styles.dishGrid}>
+          {dishes.map((dish) => (
+            <DishCard
+              key={dish.id}
+              dish={dish}
+              onViewNutrition={handleViewNutrition}
+              onViewRecipe={handleViewRecipe}
+              onSaveDish={handleSaveDish}
+            />
+          ))}
+        </div>
+      );
+    }
+  
+    return (
+      <div>
         <nav className={styles.navbar}>
-            <button className={styles.navButton} onClick={() => router.push("/HomePage")}>Home</button>
-            <div className={styles.appName}> WhatToEat?</div> 
-            <button className={styles.navButton} onClick={() => router.push("/FavoriteDishesPage")}>My List ({dishCount})</button>
+          <button className={styles.navButton} onClick={() => router.push("/HomePage")}>Home</button>
+          <div className={styles.appName}> WhatToEat?</div> 
+          <button className={styles.navButton} onClick={() => router.push("/FavoriteDishesPage")}>My List ({dishCount})</button>
         </nav>
         <br /><br />
         <div className={styles.container}>{content}</div>
-    </div>
-  );
-}
+      </div>
+    );
+  }  
