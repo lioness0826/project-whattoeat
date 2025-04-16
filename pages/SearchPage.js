@@ -113,7 +113,7 @@ function GetUserInput() {
                     {excludeIngredients.map((item, index) => (
                         <li key={index} className={styles.ingredientItem}>
                         <span>{item}</span>
-                        <button className={styles.button} onClick={() => removeIngredient("include", index)}>Remove</button>
+                        <button className={styles.button} onClick={() => removeIngredient("exclude", index)}>Remove</button>
                         </li>
                      ))}
                 </ul>
